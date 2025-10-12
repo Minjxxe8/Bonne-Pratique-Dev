@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const gradientHandler = require('./routes/gradient');
+const avatarHandler = require('./routes/avatar');
 
 app.get('/placeholder/:width/:height', (req, res) => {
     //The logic for generating a placeholder image
@@ -22,7 +23,9 @@ app.get('/gradient', (req, res) => {
 })
 
 app.get('/avatar/:name', (req, res) => {
-    res.send()
+    const name = req.params.name;
+    const finale = avatarHandler(req, res, name);
+    res.status(200).send(finale);
 })
 
 app.get('/qr/:text', (req, res) => {
