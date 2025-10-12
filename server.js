@@ -5,6 +5,7 @@ const app = express();
 const gradientHandler = require('./routes/gradient');
 const avatarHandler = require('./routes/avatar');
 const qrHandler = require('./routes/qr');
+const memeHandler = require('./routes/meme');
 
 app.get('/placeholder/:width/:height', (req, res) => {
     //The logic for generating a placeholder image
@@ -36,10 +37,11 @@ app.get('/qr/:text', (req, res) => {
 })
 
 app.get('/meme', (req, res) => {
-    const image = parseInt(req.query.image);
-    const top_text = parseInt(req.query.top_text);
+    const image = req.query.image || 'https://i.imgflip.com/1bij.jpg';
+    const top_text = req.query.top_text;
     const bottom_text = req.query.bottom_text;
-    res.send()
+    const finaleMeme = memeHandler(req, res, image, top_text, bottom_text);
+    res.status(200).send(finaleMeme);
 })
 
 const PORT = parseInt(process.env.PORT) || 3000;
