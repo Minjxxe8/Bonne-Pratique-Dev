@@ -4,6 +4,7 @@ const express = require('express');
 const app = express();
 const gradientHandler = require('./routes/gradient');
 const avatarHandler = require('./routes/avatar');
+const qrHandler = require('./routes/qr');
 
 app.get('/placeholder/:width/:height', (req, res) => {
     //The logic for generating a placeholder image
@@ -29,7 +30,9 @@ app.get('/avatar/:name', (req, res) => {
 })
 
 app.get('/qr/:text', (req, res) => {
-    res.send()
+    const text = req.params.text;
+    const finaleText = qrHandler(req, res, text);
+    res.status(200).send(finaleText);
 })
 
 app.get('/meme', (req, res) => {
