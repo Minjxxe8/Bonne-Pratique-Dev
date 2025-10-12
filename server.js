@@ -1,14 +1,8 @@
-/*
-Routes :
-Placeholder : L'user choisit une height et une width
-Gradient : L'user choisit une height, width, color1 et color2 axe x (default) ou y
-Avatar : L'user donne son nom et son prénom
-QR : L'user donne un texte
-Meme : L'user donne une image, un texte en haut et un texte en bas
-*/
+require('dotenv').config();
 
 const express = require('express');
 const app = express();
+const gradientHandler = require('./routes/gradient');
 
 app.get('/placeholder/:width/:height', (req, res) => {
     //The logic for generating a placeholder image
@@ -23,7 +17,8 @@ app.get('/gradient', (req, res) => {
     const axis = req.query.axis || 'x';
     //The logic for generating a gradient image
 
-    res.send()
+    gradientHandler(req, res, height, width, color1, color2, axis);
+    res.status(200).send("Gradient image can be generated");
 })
 
 app.get('/avatar/:name', (req, res) => {
@@ -40,3 +35,8 @@ app.get('/meme', (req, res) => {
     const bottom_text = req.query.bottom_text;
     res.send()
 })
+
+const PORT = parseInt(process.env.PORT) || 3000;
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+});
