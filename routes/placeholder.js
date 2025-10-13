@@ -1,8 +1,10 @@
 const sharp = require("sharp");
+const log = require('loglevel');
 
 const MAX_DIMENSION = 5000;
 
 async function createImage(width, height) {
+    log.debug('Creating placeholder image with dimensions:', { width, height });
     const image = await sharp({
         create: {
             width,
@@ -34,6 +36,7 @@ async function createImage(width, height) {
     </text>
   </svg>`;
 
+    log.debug('SVG overlay generated for placeholder image');
     return await image
         .composite([{ input: Buffer.from(svg) }])
         .png()
@@ -41,24 +44,28 @@ async function createImage(width, height) {
 }
 
 async function placeholderHandler(req, res, width, height) {
+    log.info('Request received to generate placeholder image:', { width, height });
     try {
         const parsedWidth = parseInt(width);
         if (isNaN(parsedWidth) || parsedWidth <= 0 || parsedWidth > MAX_DIMENSION) {
+            log.warn('Invalid width parameter:', width);
             return res.status(400).send(`Invalid width parameter. Must be a positive number between 1 and ${MAX_DIMENSION}.`);
         }
 
         const parsedHeight = parseInt(height);
         if (isNaN(parsedHeight) || parsedHeight <= 0 || parsedHeight > MAX_DIMENSION) {
+            log.warn('Invalid height parameter:', height);
             return res.status(400).send(`Invalid height parameter. Must be a positive number between 1 and ${MAX_DIMENSION}.`);
         }
 
         const imageData = await createImage(parsedWidth, parsedHeight);
 
+        log.info('Placeholder image generated successfully');
         res.setHeader('Content-Type', 'image/png');
         res.status(200).send(imageData);
 
     } catch (error) {
-        console.error('Error generating placeholder image:', error);
+        log.error('Error generating placeholder image:', error);
         res.status(500).send('Failed to generate placeholder image');
     }
 }
