@@ -4,6 +4,12 @@ const log = require('loglevel');
 
 const MAX_TEXT_LENGTH = 20;
 
+/**
+ * Downloads an image from a URL.
+ * @param {string} url - The URL of the image to download
+ * @returns {Promise<Buffer>} A buffer containing the downloaded image data
+ * @throws {Error} If the download fails or times out
+ */
 async function downloadImage(url) {
     try {
         const response = await axios.get(url, {
@@ -18,6 +24,14 @@ async function downloadImage(url) {
     }
 }
 
+/**
+ * Creates a meme by adding text overlays to an image.
+ * Text is displayed in meme-style format with white text and black stroke.
+ * @param {Buffer} imageBuffer - The source image as a buffer
+ * @param {string} [topText] - Optional text to display at the top of the image
+ * @param {string} [bottomText] - Optional text to display at the bottom of the image
+ * @returns {Promise<Buffer>} A PNG image buffer with text overlays
+ */
 async function createMeme(imageBuffer, topText, bottomText) {
     const image = sharp(imageBuffer);
     const metadata = await image.metadata();
@@ -83,6 +97,15 @@ async function createMeme(imageBuffer, topText, bottomText) {
         .toBuffer();
 }
 
+/**
+ * Handles HTTP requests for meme generation.
+ * Validates the image URL and text parameters, downloads the image, and generates a meme.
+ * @param {object} req - Express request object
+ * @param {object} res - Express response object
+ * @param {string} imageUrl - The URL of the image to create a meme from
+ * @param {string} [topText] - Optional text for the top of the meme (max 20 characters)
+ * @param {string} [bottomText] - Optional text for the bottom of the meme (max 20 characters)
+ */
 async function memeHandler(req, res, imageUrl, topText, bottomText) {
     try {
         if (!imageUrl) {
