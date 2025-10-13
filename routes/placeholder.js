@@ -36,7 +36,6 @@ async function createImage(width, height) {
     </text>
   </svg>`;
 
-    log.debug('SVG overlay generated for placeholder image');
     return await image
         .composite([{ input: Buffer.from(svg) }])
         .png()
@@ -44,7 +43,6 @@ async function createImage(width, height) {
 }
 
 async function placeholderHandler(req, res, width, height) {
-    log.info('Request received to generate placeholder image:', { width, height });
     try {
         const parsedWidth = parseInt(width);
         if (isNaN(parsedWidth) || parsedWidth <= 0 || parsedWidth > MAX_DIMENSION) {
@@ -60,7 +58,6 @@ async function placeholderHandler(req, res, width, height) {
 
         const imageData = await createImage(parsedWidth, parsedHeight);
 
-        log.info('Placeholder image generated successfully');
         res.setHeader('Content-Type', 'image/png');
         res.status(200).send(imageData);
 
