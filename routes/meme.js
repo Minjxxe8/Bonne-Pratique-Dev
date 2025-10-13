@@ -1,5 +1,6 @@
 const sharp = require("sharp");
 const axios = require("axios");
+const log = require('loglevel');
 
 const MAX_TEXT_LENGTH = 20;
 
@@ -12,6 +13,7 @@ async function downloadImage(url) {
         });
         return Buffer.from(response.data);
     } catch (error) {
+        log.error('Failed to download image:', error.message);
         throw new Error(`Failed to download image: ${error.message}`);
     }
 }
@@ -84,20 +86,24 @@ async function createMeme(imageBuffer, topText, bottomText) {
 async function memeHandler(req, res, imageUrl, topText, bottomText) {
     try {
         if (!imageUrl) {
+            log.warn('Missing parameter: image URL is required');
             return res.status(400).send("Missing parameter: image URL is required");
         }
 
         try {
             new URL(imageUrl);
         } catch (e) {
+            log.warn('Invalid image URL format:', imageUrl);
             return res.status(400).send("Invalid image URL format");
         }
 
         if (topText && topText.length > MAX_TEXT_LENGTH) {
+            log.warn('Top text is too long:', topText.length);
             return res.status(400).send(`Top text is too long. Maximum ${MAX_TEXT_LENGTH} characters.`);
         }
 
         if (bottomText && bottomText.length > MAX_TEXT_LENGTH) {
+            log.warn('Bottom text is too long:', bottomText.length);
             return res.status(400).send(`Bottom text is too long. Maximum ${MAX_TEXT_LENGTH} characters.`);
         }
 
@@ -108,7 +114,7 @@ async function memeHandler(req, res, imageUrl, topText, bottomText) {
         res.status(200).send(memeBuffer);
 
     } catch (error) {
-        console.error('Error generating meme:', error);
+        log.error('Error generating meme:', error);
         res.status(500).send(`Failed to generate meme`);
     }
 }
