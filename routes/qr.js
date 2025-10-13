@@ -3,6 +3,13 @@ const log = require('loglevel');
 
 const MAX_TEXT_LENGTH = 200;
 
+/**
+ * Generates a QR code from text.
+ * Creates a 300x300 pixel QR code with black and white colors.
+ * @param {string} text - The text to encode in the QR code
+ * @returns {Promise<Buffer>} A PNG image buffer of the QR code
+ * @throws {Error} If QR code generation fails
+ */
 async function generateQRCode(text) {
     try {
         return await QRCode.toBuffer(text, {
@@ -19,6 +26,13 @@ async function generateQRCode(text) {
     }
 }
 
+/**
+ * Handles HTTP requests for QR code generation.
+ * Validates the text parameter and generates a QR code image.
+ * @param {object} req - Express request object
+ * @param {object} res - Express response object
+ * @param {string} text - The text to encode in the QR code (max 200 characters)
+ */
 async function qrHandler(req, res, text) {
     try {
         if (!text) {
