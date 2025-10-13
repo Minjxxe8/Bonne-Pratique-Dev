@@ -26,8 +26,7 @@ app.get('/gradient', (req, res) => {
 
 app.get('/avatar/:name', (req, res) => {
     const name = req.params.name;
-    const finale = avatarHandler(req, res, name);
-    res.status(200).send(finale);
+    avatarHandler(req, res, name);
 })
 
 app.get('/qr/:text', (req, res) => {
