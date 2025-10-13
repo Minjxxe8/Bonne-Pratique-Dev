@@ -10,15 +10,13 @@ app.get('/placeholder/:width/:height', (req, res) => {
 })
 
 app.get('/gradient', (req, res) => {
-    const height = parseInt(req.query.height) || 100;
-    const width = parseInt(req.query.width) || 100;
-    const color1 = req.query.color1 || '000000';
-    const color2 = req.query.color2 || 'FFFFFF';
-    const axis = req.query.axis || 'x';
-    //The logic for generating a gradient image
+    const height = parseInt(req.query.height);
+    const width = parseInt(req.query.width);
+    const color1 = req.query.color1;
+    const color2 = req.query.color2;
+    const axis = req.query.axis;
 
     gradientHandler(req, res, height, width, color1, color2, axis);
-    res.status(200).send("Gradient image can be generated");
 })
 
 app.get('/avatar/:name', (req, res) => {
