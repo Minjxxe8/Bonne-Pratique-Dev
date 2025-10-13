@@ -37,11 +37,10 @@ app.get('/qr/:text', (req, res) => {
 })
 
 app.get('/meme', (req, res) => {
-    const image = req.query.image || 'https://i.imgflip.com/1bij.jpg';
+    const image = req.query.image;
     const top_text = req.query.top_text;
     const bottom_text = req.query.bottom_text;
-    const finaleMeme = memeHandler(req, res, image, top_text, bottom_text);
-    res.status(200).send(finaleMeme);
+    memeHandler(req, res, image, top_text, bottom_text);
 })
 
 const PORT = parseInt(process.env.PORT) || 3000;
