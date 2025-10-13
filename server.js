@@ -32,8 +32,7 @@ app.get('/avatar/:name', (req, res) => {
 
 app.get('/qr/:text', (req, res) => {
     const text = req.params.text;
-    const finaleText = qrHandler(req, res, text);
-    res.status(200).send(finaleText);
+    qrHandler(req, res, text);
 })
 
 app.get('/meme', (req, res) => {
