@@ -1,10 +1,12 @@
 const sharp = require("sharp");
+const log = require('loglevel');
 
 const MAX_NAME_LENGTH = 100;
 const MIN_NAME_LENGTH = 4;
 const AVATAR_SIZE = 200;
 
 function getInitials(name) {
+    log.debug('Calculating initials for name:', name);
     const match = name.slice(1).match(/[A-Z]/);
     if (match) {
         const index = match.index + 1;
@@ -16,6 +18,7 @@ function getInitials(name) {
 }
 
 function generateRandomColor(name) {
+    log.debug('Generating color for:', name);
     let hash = 0;
     for (let i = 0; i < name.length; i++) {
         hash = name.charCodeAt(i) + ((hash << 5) - hash);
@@ -52,10 +55,12 @@ async function createAvatar(name) {
 async function avatarHandler(req, res, name) {
     try {
         if (!name) {
+            log.warn('Missing parameter: name');
             return res.status(400).send("Missing parameter: name");
         }
 
         if (name.length < MIN_NAME_LENGTH || name.length > MAX_NAME_LENGTH) {
+            log.warn('Invalid name length:', name.length);
             return res.status(400).send(`Name length must be between ${MIN_NAME_LENGTH} and ${MAX_NAME_LENGTH} characters`);
         }
 
@@ -65,7 +70,7 @@ async function avatarHandler(req, res, name) {
         res.status(200).send(imageBuffer);
 
     } catch (error) {
-        console.error('Error generating avatar:', error);
+        log.error('Error generating avatar:', error);
         res.status(500).send('Failed to generate avatar');
     }
 }
