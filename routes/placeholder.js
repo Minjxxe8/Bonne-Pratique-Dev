@@ -1,4 +1,6 @@
-import sharp from "sharp";
+const sharp = require("sharp");
+
+const MAX_DIMENSION = 5000;
 
 async function createImage(width, height) {
     const image = await sharp({
@@ -32,10 +34,33 @@ async function createImage(width, height) {
     </text>
   </svg>`;
 
-    const outputBuffer = await image
+    return await image
         .composite([{ input: Buffer.from(svg) }])
         .png()
         .toBuffer();
-
-    return `data:image/webp;base64,${outputBuffer.toString('base64')}`;
 }
+
+async function placeholderHandler(req, res, width, height) {
+    try {
+        const parsedWidth = parseInt(width);
+        if (isNaN(parsedWidth) || parsedWidth <= 0 || parsedWidth > MAX_DIMENSION) {
+            return res.status(400).send(`Invalid width parameter. Must be a positive number between 1 and ${MAX_DIMENSION}.`);
+        }
+
+        const parsedHeight = parseInt(height);
+        if (isNaN(parsedHeight) || parsedHeight <= 0 || parsedHeight > MAX_DIMENSION) {
+            return res.status(400).send(`Invalid height parameter. Must be a positive number between 1 and ${MAX_DIMENSION}.`);
+        }
+
+        const imageData = await createImage(parsedWidth, parsedHeight);
+
+        res.setHeader('Content-Type', 'image/png');
+        res.status(200).send(imageData);
+
+    } catch (error) {
+        console.error('Error generating placeholder image:', error);
+        res.status(500).send('Failed to generate placeholder image');
+    }
+}
+
+module.exports = placeholderHandler;
