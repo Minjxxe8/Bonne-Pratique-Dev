@@ -3,6 +3,11 @@ const log = require('loglevel');
 
 const MAX_DIMENSION = 5000;
 
+/**
+ * Converts a hexadecimal color code to an RGB object.
+ * @param {string} hex - A 6-digit hexadecimal color code (without #)
+ * @returns {{r: number, g: number, b: number}} RGB color object with values 0-255
+ */
 function hexToRgb(hex) {
     log.debug('Converting hex to RGB:', hex);
     const r = parseInt(hex.substring(0, 2), 16);
@@ -11,6 +16,15 @@ function hexToRgb(hex) {
     return { r, g, b };
 }
 
+/**
+ * Creates a gradient image with two colors along a specified axis.
+ * @param {number} width - The width of the gradient image in pixels
+ * @param {number} height - The height of the gradient image in pixels
+ * @param {string} color1 - The starting color as a 6-digit hex code (without #)
+ * @param {string} color2 - The ending color as a 6-digit hex code (without #)
+ * @param {string} axis - The gradient direction: 'x' for horizontal, 'y' for vertical
+ * @returns {Promise<Buffer>} A PNG image buffer of the gradient
+ */
 async function createGradient(width, height, color1, color2, axis) {
     const rgb1 = hexToRgb(color1);
     const rgb2 = hexToRgb(color2);
@@ -34,6 +48,18 @@ async function createGradient(width, height, color1, color2, axis) {
         .toBuffer();
 }
 
+/**
+ * Handles HTTP requests for gradient image generation.
+ * Validates all parameters including dimensions, colors, and axis direction.
+ * Returns a PNG gradient image based on the specified parameters.
+ * @param {object} req - Express request object
+ * @param {object} res - Express response object
+ * @param {string} height - The height of the gradient image
+ * @param {string} width - The width of the gradient image
+ * @param {string} color1 - The starting color as a 6-digit hex code (without #)
+ * @param {string} color2 - The ending color as a 6-digit hex code (without #)
+ * @param {string} axis - The gradient direction: 'x' for horizontal, 'y' for vertical
+ */
 async function gradientHandler(req, res, height, width, color1, color2, axis) {
     try {
         const parsedWidth = parseInt(width);
