@@ -3,6 +3,13 @@ const log = require('loglevel');
 
 const MAX_DIMENSION = 5000;
 
+/**
+ * Creates a placeholder image with specified dimensions.
+ * The image has a gray background with centered text showing the dimensions.
+ * @param {number} width - The width of the placeholder image in pixels
+ * @param {number} height - The height of the placeholder image in pixels
+ * @returns {Promise<Buffer>} A PNG image buffer of the placeholder
+ */
 async function createImage(width, height) {
     log.debug('Creating placeholder image with dimensions:', { width, height });
     const image = await sharp({
@@ -42,6 +49,15 @@ async function createImage(width, height) {
         .toBuffer();
 }
 
+/**
+ * Handles HTTP requests for placeholder image generation.
+ * Validates width and height parameters and generates a gray placeholder image
+ * with centered text displaying the dimensions.
+ * @param {object} req - Express request object
+ * @param {object} res - Express response object
+ * @param {string} width - The width of the placeholder image (must be 1-5000)
+ * @param {string} height - The height of the placeholder image (must be 1-5000)
+ */
 async function placeholderHandler(req, res, width, height) {
     try {
         const parsedWidth = parseInt(width);
