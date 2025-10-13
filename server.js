@@ -6,10 +6,13 @@ const gradientHandler = require('./routes/gradient');
 const avatarHandler = require('./routes/avatar');
 const qrHandler = require('./routes/qr');
 const memeHandler = require('./routes/meme');
+const placeholderHandler = require('./routes/placeholder');
 
 app.get('/placeholder/:width/:height', (req, res) => {
-    //The logic for generating a placeholder image
-    res.send()
+    const width = req.params.width;
+    const height = req.params.height;
+
+    placeholderHandler(req, res, width, height);
 })
 
 app.get('/gradient', (req, res) => {
