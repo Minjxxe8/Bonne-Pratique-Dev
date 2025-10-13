@@ -16,35 +16,30 @@ app.get('/placeholder/:width/:height', (req, res) => {
 })
 
 app.get('/gradient', (req, res) => {
-    const height = parseInt(req.query.height) || 100;
-    const width = parseInt(req.query.width) || 100;
-    const color1 = req.query.color1 || '000000';
-    const color2 = req.query.color2 || 'FFFFFF';
-    const axis = req.query.axis || 'x';
-    //The logic for generating a gradient image
+    const height = parseInt(req.query.height);
+    const width = parseInt(req.query.width);
+    const color1 = req.query.color1;
+    const color2 = req.query.color2;
+    const axis = req.query.axis;
 
     gradientHandler(req, res, height, width, color1, color2, axis);
-    res.status(200).send("Gradient image can be generated");
 })
 
 app.get('/avatar/:name', (req, res) => {
     const name = req.params.name;
-    const finale = avatarHandler(req, res, name);
-    res.status(200).send(finale);
+    avatarHandler(req, res, name);
 })
 
 app.get('/qr/:text', (req, res) => {
     const text = req.params.text;
-    const finaleText = qrHandler(req, res, text);
-    res.status(200).send(finaleText);
+    qrHandler(req, res, text);
 })
 
 app.get('/meme', (req, res) => {
-    const image = req.query.image || 'https://i.imgflip.com/1bij.jpg';
+    const image = req.query.image;
     const top_text = req.query.top_text;
     const bottom_text = req.query.bottom_text;
-    const finaleMeme = memeHandler(req, res, image, top_text, bottom_text);
-    res.status(200).send(finaleMeme);
+    memeHandler(req, res, image, top_text, bottom_text);
 })
 
 const PORT = parseInt(process.env.PORT) || 3000;
