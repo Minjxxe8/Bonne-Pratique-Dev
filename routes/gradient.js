@@ -1,8 +1,10 @@
 const sharp = require("sharp");
+const log = require('loglevel');
 
 const MAX_DIMENSION = 5000;
 
 function hexToRgb(hex) {
+    log.debug('Converting hex to RGB:', hex);
     const r = parseInt(hex.substring(0, 2), 16);
     const g = parseInt(hex.substring(2, 4), 16);
     const b = parseInt(hex.substring(4, 6), 16);
@@ -38,23 +40,28 @@ async function gradientHandler(req, res, height, width, color1, color2, axis) {
         const parsedHeight = parseInt(height);
 
         if (!height || !width || !color1 || !color2 || !axis) {
+            log.warn('Missing parameters. Required: height, width, color1, color2, axis');
             return res.status(400).send("Missing parameters. Required: height, width, color1, color2, axis");
         }
 
         if (isNaN(parsedWidth) || parsedWidth <= 0 || parsedWidth > MAX_DIMENSION) {
+            log.warn('Invalid width parameter:', width);
             return res.status(400).send(`Invalid width parameter. Must be a positive number between 1 and ${MAX_DIMENSION}.`);
         }
 
         if (isNaN(parsedHeight) || parsedHeight <= 0 || parsedHeight > MAX_DIMENSION) {
+            log.warn('Invalid height parameter:', height);
             return res.status(400).send(`Invalid height parameter. Must be a positive number between 1 and ${MAX_DIMENSION}.`);
         }
 
         if (axis.toLowerCase() !== 'x' && axis.toLowerCase() !== 'y') {
+            log.warn('Invalid axis parameter:', axis);
             return res.status(400).send("Invalid axis parameter, must be 'x' or 'y'");
         }
 
         const hexRegex = /^[0-9A-Fa-f]{6}$/;
         if (!hexRegex.test(color1) || !hexRegex.test(color2)) {
+            log.warn('Invalid color format:', { color1, color2 });
             return res.status(400).send("Invalid color format, must be a 6-digit hex code (without #)");
         }
 
@@ -64,7 +71,7 @@ async function gradientHandler(req, res, height, width, color1, color2, axis) {
         res.status(200).send(imageBuffer);
 
     } catch (error) {
-        console.error('Error generating gradient image:', error);
+        log.error('Error generating gradient image:', error);
         res.status(500).send('Failed to generate gradient image');
     }
 }
