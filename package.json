@@ -1,0 +1,23 @@
+{
+  "name": "bonne-pratique-dev",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Minjxxe8/Bonne-Pratique-Dev.git"
+  },
+  "private": true,
+  "dependencies": {
+    "axios": "^1.12.2",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "loglevel": "^1.9.2",
+    "qrcode": "^1.5.4",
+    "sharp": "^0.34.4"
+  }
+}

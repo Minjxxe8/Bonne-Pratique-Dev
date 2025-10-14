@@ -1,0 +1,106 @@
+const sharp = require("sharp");
+const log = require('loglevel');
+
+const MAX_NAME_LENGTH = 100;
+const MIN_NAME_LENGTH = 4;
+const AVATAR_SIZE = 200;
+
+/**
+ * Extracts initials from a name.
+ * If the name is camelCase, returns the first character of each part.
+ * Otherwise, returns the first two characters.
+ * @param {string} name - The name to extract initials from
+ * @returns {string} The extracted initials
+ */
+function getInitials(name) {
+    log.debug('Calculating initials for name:', name);
+    const match = name.slice(1).match(/[A-Z]/);
+    if (match) {
+        const index = match.index + 1;
+        const parts = [name.slice(0, index), name.slice(index)];
+        const avatar = parts.map(part => part[0]);
+        return avatar.join('');
+    }
+    return name.slice(0, 2);
+}
+
+/**
+ * Generates a random color based on a name using a hash function.
+ * The same name will always produce the same color.
+ * @param {string} name - The name to generate a color from
+ * @returns {{r: number, g: number, b: number}} RGB color object
+ */
+function generateRandomColor(name) {
+    log.debug('Generating color for:', name);
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) {
+        hash = name.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+    const r = (hash & 0xFF0000) >> 16;
+    const g = (hash & 0x00FF00) >> 8;
+    const b = hash & 0x0000FF;
+
+    return { r, g, b };
+}
+
+/**
+ * Creates an avatar image with initials on a colored background.
+ * @param {string} name - The name to create an avatar for
+ * @returns {Promise<Buffer>} A PNG image buffer of the avatar
+ */
+async function createAvatar(name) {
+    const initials = getInitials(name).toUpperCase();
+    const color = generateRandomColor(name);
+    const fontSize = AVATAR_SIZE / 2.5;
+
+    const svg = `
+    <svg width="${AVATAR_SIZE}" height="${AVATAR_SIZE}">
+        <circle cx="${AVATAR_SIZE / 2}" cy="${AVATAR_SIZE / 2}" r="${AVATAR_SIZE / 2}" 
+                fill="rgb(${color.r}, ${color.g}, ${color.b})" />
+        <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" 
+              font-size="${fontSize}" font-family="Arial, sans-serif" 
+              font-weight="bold" fill="white">
+            ${initials}
+        </text>
+    </svg>`;
+
+    return await sharp(Buffer.from(svg))
+        .png()
+        .toBuffer();
+}
+
+/**
+ * Handles HTTP requests for avatar generation.
+ * Validates the name parameter and returns a PNG avatar image.
+ * @param {object} req - Express request object
+ * @param {object} res - Express response object
+ * @param {string} name - The name to generate an avatar for
+ */
+async function avatarHandler(req, res, name) {
+    try {
+        if (!name) {
+            log.warn('Missing parameter: name');
+            return res.status(400).send("Missing parameter: name");
+        }
+
+        if (name.length < MIN_NAME_LENGTH || name.length > MAX_NAME_LENGTH) {
+            log.warn('Invalid name length:', name.length);
+            return res.status(400).send(`Name length must be between ${MIN_NAME_LENGTH} and ${MAX_NAME_LENGTH} characters`);
+        }
+
+        const imageBuffer = await createAvatar(name);
+
+        res.setHeader('Content-Type', 'image/png');
+        res.status(200).send(imageBuffer);
+
+    } catch (error) {
+        log.error('Error generating avatar:', error);
+        res.status(500).send('Failed to generate avatar');
+    }
+}
+
+module.exports = avatarHandler;
+module.exports.getInitials = getInitials;
+module.exports.generateRandomColor = generateRandomColor;
+module.exports.createAvatar = createAvatar;
