@@ -2,14 +2,14 @@
 
 ---
 
-## 📖 Table of contents
+##  Table of contents
 
 
-1. [**📚 About the project**](#-about-the-project)
-2. [**🚀 How to run the project**](#-how-to-run-the-project)
-3. [**💻 Technologies**](#-technologies)
-4. [**🎬 Presentation**](#-presentation)
-5. [**👥 Credits**](#-credits)
+1. [**About the project**](#-about-the-project)
+2. [**How to run the project**](#-how-to-run-the-project)
+3. [**Technologies**](#-technologies)
+4. [**Presentation**](#-presentation)
+5. [**Credits**](#-credits)
 
 ---
 
@@ -34,7 +34,7 @@ Environment variables (via Dotenv) are used to configure the server port and oth
 
 ---
 
-## 🚀 How to run the project
+## How to run the project
 
 To run the project, you will need to have npm installed on your ide.
 
@@ -59,12 +59,9 @@ The project was developed using the following technologies:
 
 ---
 
-## 👥 Credits
+## Credits
 
 This project was developed by:
 <br>
 <a href="https://github.com/Oiha-dev"><img src="https://avatars.githubusercontent.com/u/115953539" alt="Gauthier Cenes" width="69" height="69"/></a>
 <img style="height:auto;" alt="" src="https://avatars.githubusercontent.com/u/137718998?v=4" width="69" height="69" class="avatar avatar-user width-full border color-bg-default">
-
-The font used in the project is [Chalkboard](https://www.dafont.com/neat-chalk.font) by [Darrell Flood](https://www.hawtpixel.com).<br>
-You can find the background image [here](https://unsplash.com/fr/photos/un-tableau-noir-avec-un-tableau-noir-et-des-crayons-de-couleur-065tsEqQj6Y).
