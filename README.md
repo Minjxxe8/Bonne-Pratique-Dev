@@ -33,6 +33,7 @@ To run the project, you will need to have npm installed.
 1. Clone the repository:
 ```bash
 git clone https://github.com/Minjxxe8/Bonne-Pratique-Dev.git
+cd Bonne-Pratique-Dev/
 npm install
 npm run start
 ```
