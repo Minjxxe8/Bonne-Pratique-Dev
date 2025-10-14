@@ -1,7 +1,5 @@
 # Bonne-Pratique-Dev
 
----
-
 ##  Table of contents
 
 
@@ -10,8 +8,6 @@
 3. [**Technologies**](#-technologies)
 4. [**Presentation**](#-presentation)
 5. [**Credits**](#-credits)
-
----
 
 ## About the project
 
@@ -29,8 +25,6 @@ The API provides the following features:
 
 - Meme Generator (Adds top and bottom text to an existing image to create memes).
 
----
-
 ## How to run the project
 
 To run the project, you will need to have npm installed.
@@ -44,8 +38,6 @@ npm run start
 
 2. Open your browser and go to `http://localhost:3000/`, then add the route to access a specific feature.
 
----
-
 ## Librairies
 
 The project was developed using the following technologies:
@@ -54,8 +46,6 @@ The project was developed using the following technologies:
 - [Dotenv](https://www.npmjs.com/package/dotenv)
 - [Sharp](https://www.npmjs.com/package/sharp)
 - [Qr Code](https://www.npmjs.com/package/qrcode)
-
----
 
 ## Credits
 
