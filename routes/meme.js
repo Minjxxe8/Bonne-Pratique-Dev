@@ -143,3 +143,5 @@ async function memeHandler(req, res, imageUrl, topText, bottomText) {
 }
 
 module.exports = memeHandler;
+module.exports.downloadImage = downloadImage;
+module.exports.createMeme = createMeme;

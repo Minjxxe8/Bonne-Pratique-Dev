@@ -101,3 +101,6 @@ async function avatarHandler(req, res, name) {
 }
 
 module.exports = avatarHandler;
+module.exports.getInitials = getInitials;
+module.exports.generateRandomColor = generateRandomColor;
+module.exports.createAvatar = createAvatar;

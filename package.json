@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "node test.js"
   },
   "repository": {
     "type": "git",
@@ -15,7 +16,8 @@
     "axios": "^1.12.2",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
-    "sharp": "^0.34.4",
-    "qrcode": "^1.5.4"
+    "loglevel": "^1.9.2",
+    "qrcode": "^1.5.4",
+    "sharp": "^0.34.4"
   }
 }

@@ -57,3 +57,4 @@ async function qrHandler(req, res, text) {
 }
 
 module.exports = qrHandler;
+module.exports.generateQRCode = generateQRCode;

@@ -84,3 +84,4 @@ async function placeholderHandler(req, res, width, height) {
 }
 
 module.exports = placeholderHandler;
+module.exports.createImage = createImage;

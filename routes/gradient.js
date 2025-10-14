@@ -103,3 +103,5 @@ async function gradientHandler(req, res, height, width, color1, color2, axis) {
 }
 
 module.exports = gradientHandler;
+module.exports.hexToRgb = hexToRgb;
+module.exports.createGradient = createGradient;
