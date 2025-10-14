@@ -13,42 +13,40 @@
 
 ---
 
-## 📚 About the project
+## About the project
 
-This project is a simple and modular Node.js API built with Express.js, designed to dynamically generate and serve various types of images through different endpoints. It demonstrates how to handle HTTP requests, manage parameters, and perform image processing efficiently.
+This project use Node.js and Express.js, to dynamically generate and serve various types of images through different endpoints. It handle HTTP requests, manage parameters, and perform image processing efficiently.
 
 The API provides the following features:
 
-- Placeholder Generator — Creates customizable placeholder images based on width and height.
+- Placeholder Generator (Creates customizable placeholder images based on width and height).
 
-- Gradient Generator — Generates gradient backgrounds using two colors and an orientation (axis).
+- Gradient Generator (Generates gradient backgrounds using two colors and an orientation (axis)).
 
-- Avatar Generator — Produces personalized avatars from a given name.
+- Avatar Generator (Produces personalized avatars from a given name).
 
-- QR Code Generator — Converts text into scannable QR codes.
+- QR Code Generator (Converts text into scannable QR codes).
 
-- Meme Generator — Adds top and bottom text to an existing image to create memes.
-
-Each feature is handled by a dedicated route, making the code easy to maintain and extend.
-Environment variables (via Dotenv) are used to configure the server port and other potential settings securely.
+- Meme Generator (Adds top and bottom text to an existing image to create memes).
 
 ---
 
 ## How to run the project
 
-To run the project, you will need to have npm installed on your ide.
+To run the project, you will need to have npm installed.
 
 1. Clone the repository:
 ```bash
 git clone https://github.com/Minjxxe8/Bonne-Pratique-Dev.git
-node server.js
+npm install
+npm run start
 ```
 
-2. Open your browser and go to `http://localhost:3000/`, then add the desired route to access a specific feature.
+2. Open your browser and go to `http://localhost:3000/`, then add the route to access a specific feature.
 
 ---
 
-## 💻 Librairies
+## Librairies
 
 The project was developed using the following technologies:
 - [Express Js](https://expressjs.com/)
