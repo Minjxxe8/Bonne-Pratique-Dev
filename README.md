@@ -150,6 +150,9 @@ The project was developed using the following technologies:
 - [Sharp](https://www.npmjs.com/package/sharp)
 - [Qr Code](https://www.npmjs.com/package/qrcode)
 
+## Github Repository
+https://github.com/Minjxxe8/Bonne-Pratique-Dev.git
+
 ## Credits
 
 This project was developed by:
